@@ -27,9 +27,9 @@ get_spp <- function(scientific = FALSE){
   data("cooperatives")
 
   if(scientific){
-    spp <- unique(cooperatives$Complete_Name)
+    spp <- unique(cooperatives$complete_name)
   } else {
-    spp <- unique(cooperatives$Target_species)
+    spp <- unique(cooperatives$target_species)
   }
   
   return(spp)
