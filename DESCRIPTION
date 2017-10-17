@@ -1,10 +1,14 @@
 Package: cooperatR
-Title: What the Package Does (one line, title case)
+Title: Manipulate and wuery Dan Ovando's cooperative database
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Authors@R: person("Juan Carlos", "Villaseñor-Derbez", email = "jvillasenor@bren.ucsb.edu", role = c("aut", "cre"))
+Description: A set of functions and data to query and manipulate a cooperatives database created by Ovando et al., 2014.
 Depends: R (>= 3.4.2)
-License: What license is it under?
+License: MIT License
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
+Imports: tidyverse,
+  magrittr,
+  dplyr,
+  tidyr
