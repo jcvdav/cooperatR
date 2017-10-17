@@ -17,7 +17,17 @@
 #'   \item Role of government
 #' }
 #' 
-#' Variables fall into 2 general classes: binary data (1 or 0), descriptive entry (e.g. 10,000 tones, coral reef). A full list of variables present in the dataset can be seen by using the \code{\link{get_variables}} function.
+#' Variables fall into 2 general classes:
+#' 
+#' \itemize{
+#'   \item binary data (1 or 0)
+#'   \item descriptive entry (e.g. 10,000 tones, coral reef)
+#' }
+#' 
+#' A full list of variables present in the dataset can be seen by using the \code{\link{get_variables}} function.
+#' 
+#' For a full documentation of the original dataset, look at the supplementary
+#' information of the paper in: http://www.sciencedirect.com/science/article/pii/S0308597X12000565
 #'
 #' @docType data
 #' @keywords datasets
