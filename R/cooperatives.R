@@ -1,7 +1,8 @@
 #' Characteristics of 67 fishing cooperatives around the world
 #'
-#' @description This document provides definitions for variables collected in the
-#' database of cooperative fisheries. Data are provided in broad categories of
+#' @description This document provides definitions for variables
+#' collected in the database of cooperative fisheries. Data are
+#' provided in broad categories of
 #' 
 #' \itemize{
 #'   \item General information
@@ -24,10 +25,15 @@
 #'   \item descriptive entry (e.g. 10,000 tones, coral reef)
 #' }
 #' 
-#' A full list of variables present in the dataset can be seen by using the \code{\link{get_variables}} function.
+#' All variable names are written in snake case. For example,
+#' a variable for consistent spawining location of a species
+#' is included as \code{consistent_spawning_location}.
+#' 
+#' A full list of variables present in the dataset can be seen
+#' by using the \code{\link{get_variables}} function.
 #' 
 #' For a full documentation of the original dataset, look at the supplementary
-#' information of the paper in: http://www.sciencedirect.com/science/article/pii/S0308597X12000565
+#' information of the paper in: https://doi.org/10.1016/j.marpol.2012.03.012.
 #'
 #' @docType data
 #' @keywords datasets
@@ -35,6 +41,7 @@
 #' @usage data(cooperatives)
 #' @format A data frame with 103 rows and 133 variables
 #' @seealso \code{\link{get_variables}}
-#' @references Daniel A. Ovando, Robert T. Deacon, Sarah E. Lester, Christopher Costello, Tonya Van Leuvan, Karlynn McIlwain, C. Kent Strauss, Michael Arbuckle, Rod Fujita, Stefan Gelcich, Hirotsugu Uchida, Conservation incentives and collective choices in cooperative fisheries, Marine Policy, Volume 37, January 2013, Pages 132-140, ISSN 0308-597X, https://doi.org/10.1016/j.marpol.2012.03.012. (http://www.sciencedirect.com/science/article/pii/S0308597X12000565)
+#' @references Daniel A. Ovando, Robert T. Deacon, Sarah E. Lester, Christopher Costello, Tonya Van Leuvan, Karlynn McIlwain, C. Kent Strauss, Michael Arbuckle, Rod Fujita, Stefan Gelcich, Hirotsugu Uchida, Conservation incentives and collective choices in cooperative fisheries, Marine Policy, Volume 37, January 2013, Pages 132-140, ISSN 0308-597X, https://doi.org/10.1016/j.marpol.2012.03.012.
+#' 
 #' @author Juan Carlos
 NULL
