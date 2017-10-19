@@ -1,5 +1,7 @@
 #' Get unique values
 #' 
+#' @name get_unique
+#' 
 #' @description Creates a \code{data.frame} containing columns
 #' that uniquely identify a fishery in the \code{\link{cooperatives}}
 #' dataset. By default, it includes \code{original_order},

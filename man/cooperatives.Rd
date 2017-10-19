@@ -13,6 +13,7 @@ This document provides definitions for variables
 collected in the database of cooperative fisheries. Data are
 provided in broad categories of
 
+
 \itemize{
   \item General information
   \item Ecosystem characteristics

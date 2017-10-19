@@ -1,8 +1,11 @@
 #' Characteristics of 67 fishing cooperatives around the world
+#' 
+#' @name cooperatives
 #'
 #' @description This document provides definitions for variables
 #' collected in the database of cooperative fisheries. Data are
 #' provided in broad categories of
+#' 
 #' 
 #' \itemize{
 #'   \item General information
@@ -37,7 +40,6 @@
 #'
 #' @docType data
 #' @keywords datasets
-#' @name cooperatives
 #' @usage data(cooperatives)
 #' @format A data frame with 103 rows and 133 variables
 #' @seealso \code{\link{get_variables}}
