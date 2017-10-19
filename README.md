@@ -3,6 +3,8 @@ R package containing Dan Ovando's database for cooperatives from his [2014 paper
 
 ## To install `cooperatR` in your computer
 
+(You can copy/paste the code that `looks like this`)
+
 1. Install the `devtools` package. This wil allow you to install R packages that are on github, like this one.
 
 `install.packages("devtools")`
