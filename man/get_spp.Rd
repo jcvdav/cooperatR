@@ -7,13 +7,20 @@
 get_spp(scientific = FALSE)
 }
 \arguments{
-\item{scientific}{If \code{scientific = TRUE}, then a list of scientific names is returned. If \code{scientific = FALSE} (the default) only common names are returned.}
+\item{scientific}{If \code{scientific = TRUE},
+then a list of scientific names is returned. If
+\code{scientific = FALSE} (the default) only
+common names are returned.}
 }
 \value{
-A character vector containing a unique list of species present in the cooperatives dataset.
+A character vector containing a unique list
+of species present in the cooperatives dataset.
 }
 \description{
-Looks at the database and extracts a list of all species present. The user can specify if common or scientific names should be returned (See scientific).
+Looks at the database and extracts a
+list of all species present. The user can specify
+if common or scientific names should be returned
+(See scientific).
 }
 \examples{
 

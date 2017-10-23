@@ -7,7 +7,10 @@
 get_variables(sort = FALSE)
 }
 \arguments{
-\item{sort}{if \code{sort = FALSE} (the default) variable names are returned in the original order of the database (usefull, because they are grouped by type). If \code{sort = TRUE} variable names are sorted alphabetically (usefull to inspect existing variables).}
+\item{sort}{if \code{sort = FALSE} (the default) variable names are
+returned in the original order of the database (usefull, because
+they are grouped by type). If \code{sort = TRUE} variable names are
+sorted alphabetically (usefull to inspect existing variables).}
 }
 \value{
 a character vector containing the names of the variables in the dataset
