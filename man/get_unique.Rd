@@ -45,7 +45,7 @@ dataset. By default, it includes \code{original_order},
 # Get unique columns excluding species and save to file
 get_unique(include.spp = FALSE, to.file = TRUE)
 
-# Get unique columns, with species, and include \\code{support_of_voluntary_regs} and \\code{gear_type} columns
+# Get unique columns, with species, and include \\code{support_of_voluntary_regs}and \\code{gear_type} columns
 get_unique(other.variables = c("support_of_voluntary_regs", "gear_type"))
 
 }
