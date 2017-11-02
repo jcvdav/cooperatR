@@ -1,0 +1,167 @@
+---
+title: "Cleaning the cooperatives database"
+output:
+    html_notebook:
+      toc: yes
+      toc_depth: 4
+      toc_float:
+        collapsed: no
+---
+
+## Load packages
+
+```{r}
+suppressPackageStartupMessages({
+  library(tidyverse)
+})
+```
+
+
+
+## Read in the data
+
+First we will read in all the data from the original csv file, where no changes have been made. We read it in setting `na.strings = 999`, because that is what was used in the creation of the database to report a missing value. We want to convert those to `NA`'s. We will also use `stringAsFactors = F` to make sure that string variables are interpreted as text, not factors. Finally, we include `strip.white = T` to lead any white spaces before or after any words.
+
+```{r}
+# Read the data
+cooperatives_db <- read.csv("master cooperative database for analysis.csv",
+                            na.strings = 999,
+                            stringsAsFactors = F,
+                            strip.white = T)
+# Get a preview
+head(cooperatives_db)
+```
+
+**You can see that the database has `r dim(cooperatives_db)[1]` rows and `r dim(cooperatives_db)[2]` columns.**
+
+## Standardize column names
+
+We can see that the column names are not standard. Some of them have capital letters, some of them dont. Some include repeated characters, such as `__` instead of just `_`. We want to make sure we fix all these.
+
+First, lets identify all problems:
+
+```{r}
+colnames(cooperatives_db)
+```
+
+By looking at the column names, there are a few things that we might want to do:
+
+- Convert everything to `snake_case`, where nothing is capitalized and words are separated by a `_`.
+- Some values, like column 43 (`Subsidy_as_a___of_landed_value`) have repeated characters, and we want to see `subsidy_as_a_of_landed_values`
+- Some values have trailing `_`, like `GDP_from_fishing__US_`, in column 40. We want this to be `gdp_from_fishing_us`
+- Government is abbreviated as `gov_t`, like in column 119 (`Gov_t_Ambivalent`). We want this as `gov_ambivalent`
+- We see many cases where `cooperative` or `comanagement` are separated by `_` (column 109; `Vessels__co_op_`), and we want `vessels_coop`
+
+We can fix all these with the use of regular expressions and string substitutions:
+
+```{r}
+columns <- colnames(cooperatives_db) %>%
+  tolower() %>%
+  gsub(pattern = "(_)\\1+", replacement = "_") %>% 
+  gsub(pattern = "_+$", replacement = "") %>% 
+  gsub(pattern = "gov_t", replacement = "gov") %>% 
+  gsub(pattern = "co_", replacement = "co") %>% 
+  gsub(pattern = "subsidy_as_a_of_landed_value", replacement = "subsidy_as_a_percent_of_landed_value") %>% 
+  gsub(pattern = "a_of_gdp_from_fishing", replacement = "percent_of_gdp_from_fishing")
+
+columns
+```
+
+Once we like how these look, we just re-name the columns in `cooperatives_db`
+
+```{r}
+colnames(cooperatives_db) <- columns
+
+head(cooperatives_db)
+```
+
+## Standardize values
+
+Now that the columns look beter, we can go ahead and clean the data itself. First, it would help at identifying all the unique values for each column. In this tree-like viewer, you can click on each of the column names and see a list of all the unique values within it. For example, `entered_by`, which contains information on who entered the data has the unique values `r unique(cooperatives_db$entered_by)`.
+
+```{r}
+sort_unique <- function(x){sort(unique(x))}
+ 
+lapply(cooperatives_db, sort_unique) %>% 
+  listviewer::jsonedit()
+```
+
+By reviewing each of the above, we can identify the following things we might want to fix:
+
+### General fixes
+
+- ~~Make everything sentence case (*i.e.* only first letter of first word capitalized)~~
+- Convert values of `(0, 1)` to `(FALSE, TRUE)`
+
+### Column-level fixes
+
+- `entered_by`
+    - ~~Contains missing values labeled as `""`, but we want those to be `NA`'s~~
+- `umbrella_organization`:
+    - ~~Has values of 0, `null` (which are `NA`), 1, and 2.~~
+    - ~~These is supposed to be a boolean (*i.e.* `TRUE` / `FALSE`).~~
+    - ~~We will set values `umbrella_organization_i > 1` as `TRUE` and `umbrella_organization < 1 as FALSE`~~
+- `target_species`:
+    - ~~Standardize everything to remove capitalized letters~~
+    - Conver all names into english
+    - Records 43 (`Callo de hacha (Pen shell)`) and 44 (`Callo de hacha / Pen shell`) are the same species
+    - There is one missing value. We might be able to fix it based on the scientific name (`complete_name`)
+- `complete_name`:
+    - Must make sure the names are still valid
+    - Missing names
+    - Change `Genus sp.` and `Genus spp.` to `Genus spp`
+    - Delete duplicated whit spaces (`Farfantepenaeus  californiensis` to `Farfantepenaeus californiensis`)
+    - Caribean spiny lobster is lised as `Panulirus argus` and `Panuliris argus`
+- `fb_migration`:
+    - Has values of `r sort(unique(cooperatives_db$fb_migration))`
+    - Make sure these are standardized
+- `fish_type`:
+    - has repeated cases (`Finfish - pelagic` and `Finfish - Pelagic`)
+- `habitat`:
+    - repeated cases (`deep water` and `Deep water`) and other similar captialization issues
+- `fished_habitat`:
+    - repeated cases (`deep water` and `Deep water`) and other similar captialization issues
+- `species_growth`:
+    - Has values of `r sort(unique(cooperatives_db$species_growth))`
+    - Perhaps `Slow` and `Low` mean the same thing? Review metadata
+- `adult_movement`
+    - Some values are separated by double dashes `- -`
+- `catch_share_types`
+    - fix values of `Co-op` to `coop`
+    - compose a `catch_share_types2` column based on the columns right next to this one
+- `species_value` and `unit_of_value`
+    - will be fixed by Andrew
+- `gear_type`
+    - misspelled values
+- `landings_coop` and `landings_units`
+    - fixed by Andrew
+
+Most of these problems can be fixed easily:
+
+```{r}
+# Function to remove blanck (ampty) characters
+remove_blanks <- function(x){gsub(pattern = "^$", replacement = NA, x)}
+
+mutate_all(cooperatives_db, tolower) %>% # set to lower case
+  mutate_all(remove_blanks) %>% #remove blank (empty) cells)
+  mutate(umbrella_organization = gsub(pattern = 0, replacement = FALSE, x = umbrella_organization),
+         umbrella_organization = gsub(pattern = "[1,2]", replacement = TRUE, x = umbrella_organization))
+  
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
