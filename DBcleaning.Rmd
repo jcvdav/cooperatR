@@ -103,7 +103,7 @@ By reviewing each of the above, we can identify the following things we might wa
     - ~~We will set values `umbrella_organization_i > 1` as `TRUE` and `umbrella_organization < 1 as FALSE`~~
 - `target_species`:
     - ~~Standardize everything to remove capitalized letters~~
-    - Conver all names into english
+    - Conver all names into english (?)
     - Records 43 (`Callo de hacha (Pen shell)`) and 44 (`Callo de hacha / Pen shell`) are the same species
     - There is one missing value. We might be able to fix it based on the scientific name (`complete_name`)
 - `complete_name`:
@@ -145,8 +145,9 @@ remove_blanks <- function(x){gsub(pattern = "^$", replacement = NA, x)}
 mutate_all(cooperatives_db, tolower) %>% # set to lower case
   mutate_all(remove_blanks) %>% #remove blank (empty) cells)
   mutate(umbrella_organization = gsub(pattern = 0, replacement = FALSE, x = umbrella_organization),
-         umbrella_organization = gsub(pattern = "[1,2]", replacement = TRUE, x = umbrella_organization))
-  
+         umbrella_organization = gsub(pattern = "[1,2]", replacement = TRUE, x = umbrella_organization)) %>% 
+  lapply(sort_unique) %>% 
+  listviewer::jsonedit()
 ```
 
 
