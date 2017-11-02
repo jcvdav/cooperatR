@@ -1,3 +1,14 @@
+***
+
+## NEWS SECTION
+
+1. The database has been updated. Column names remain the same, but it many inconsistencies have been fixed (and more will be ficed in the next days). Al inconsistencies have been identified. To see a logbook of changes [click here](http://www.villasenor-derbez.com/cooperatR/DBcleaning.nb.html)
+
+2. Proposed system for archiving our data: The **K**nowledge **N**etwork for **B**iocomplexity ([KNB](https://knb.ecoinformatics.org/#about))
+    - Example of data storage from [this paper](https://www.nature.com/articles/s41559-017-0257-9) can be seen [here](https://knb.ecoinformatics.org/#view/doi:10.5063/F1CF9N69)
+
+***
+
 # cooperatR
 R package containing Dan Ovando's database for cooperatives from his [2014 paper](https://doi.org/10.1016/j.marpol.2012.03.012)
 
