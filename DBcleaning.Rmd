@@ -104,55 +104,175 @@ By reviewing each of the above, we can identify the following things we might wa
 - `target_species`:
     - ~~Standardize everything to remove capitalized letters~~
     - Conver all names into english (?)
-    - Records 43 (`Callo de hacha (Pen shell)`) and 44 (`Callo de hacha / Pen shell`) are the same species
+    - ~~Records 43 (`Callo de hacha (Pen shell)`) and 44 (`Callo de hacha / Pen shell`) are the same species~~
     - There is one missing value. We might be able to fix it based on the scientific name (`complete_name`)
 - `complete_name`:
-    - Must make sure the names are still valid
-    - Missing names
-    - Change `Genus sp.` and `Genus spp.` to `Genus spp`
-    - Delete duplicated whit spaces (`Farfantepenaeus  californiensis` to `Farfantepenaeus californiensis`)
-    - Caribean spiny lobster is lised as `Panulirus argus` and `Panuliris argus`
+    - Must make sure the names are still valid (?)
+    - Missing names (?)
+    - ~~Change `Genus sp.` and `Genus spp.` to `Genus spp`~~
+    - ~~Delete duplicated white spaces (`Farfantepenaeus  californiensis` to `Farfantepenaeus californiensis`)~~
+    - ~~Caribean spiny lobster is lised as `Panulirus argus` and `Panuliris argus`~~
 - `fb_migration`:
     - Has values of `r sort(unique(cooperatives_db$fb_migration))`
     - Make sure these are standardized
 - `fish_type`:
-    - has repeated cases (`Finfish - pelagic` and `Finfish - Pelagic`)
+    - ~~has repeated cases (`Finfish - pelagic` and `Finfish - Pelagic`)~~
 - `habitat`:
-    - repeated cases (`deep water` and `Deep water`) and other similar captialization issues
+    - ~~repeated cases (`deep water` and `Deep water`) and other similar captialization issues~~
 - `fished_habitat`:
-    - repeated cases (`deep water` and `Deep water`) and other similar captialization issues
+    - ~~repeated cases (`deep water` and `Deep water`) and other similar captialization issues~~
 - `species_growth`:
-    - Has values of `r sort(unique(cooperatives_db$species_growth))`
-    - Perhaps `Slow` and `Low` mean the same thing? Review metadata
+    - ~~Has values of `r sort(unique(cooperatives_db$species_growth))`~~
+    - ~~Perhaps `Slow` and `Low` mean the same thing? Review metadata~~
 - `adult_movement`
-    - Some values are separated by double dashes `- -`
+    - ~~Some values are separated by double dashes `--`~~
 - `catch_share_types`
-    - fix values of `Co-op` to `coop`
+    - ~fix values of `Co-op` to `coop`~
     - compose a `catch_share_types2` column based on the columns right next to this one
 - `species_value` and `unit_of_value`
     - will be fixed by Andrew
 - `gear_type`
-    - misspelled values
+    - ~~misspelled values~~
 - `landings_coop` and `landings_units`
     - fixed by Andrew
+- `use_of_catch`
+    - ~~Long record must be shortened (`1.local market (mostly wholesale) 2. subsistence (www.indiana.edu/~voconf/papers/thomson_voconf.pdf)", "local market/subsistance`)~~
+    - ~~Replace `;` wih `/`~~
 
-Most of these problems can be fixed easily:
+Most of these problems can be fixed easily by making some small functions:
+
+### Function to transform ONLY CHARACCTER VECTORS to lower
 
 ```{r}
-# Function to remove blanck (ampty) characters
-remove_blanks <- function(x){gsub(pattern = "^$", replacement = NA, x)}
+ToLower <- function(x){
+  classes <- sapply(x, is.character)
+  
+  cols <- colnames(x)[classes]
+  
+  mutate_at(x, cols, tolower)
+}
 
-mutate_all(cooperatives_db, tolower) %>% # set to lower case
-  mutate_all(remove_blanks) %>% #remove blank (empty) cells)
-  mutate(umbrella_organization = gsub(pattern = 0, replacement = FALSE, x = umbrella_organization),
-         umbrella_organization = gsub(pattern = "[1,2]", replacement = TRUE, x = umbrella_organization)) %>% 
-  lapply(sort_unique) %>% 
+```
+
+### Make 1 / 0 columns into T / F
+
+```{r}
+makeTF <- function(x){
+  lengths <- summarize_all(x, function(x){length(unique(x)) <= 3})
+  
+  classes <- summarize_all(x, is.numeric)
+  
+  has10fn <- function(x){
+    x[!is.na(x)] %>% 
+      unique() %in% 
+      c(0, 1) %>% 
+      all()}
+  
+  has10 <- summarize_all(x, has10fn)
+  
+  conditions <- rbind(lengths, classes, has10) %>% 
+    sapply(all)
+  
+  cols <- colnames(x)[conditions]
+
+  trans_10_TF <- function(x){
+    x <- gsub(pattern = "0", replacement = FALSE, x) %>%
+      gsub(pattern = "1", replacement = TRUE)
+    return(x)
+  }
+
+  mutate_at(x, cols, trans_10_TF)
+}
+```
+
+
+### Function to remove blank (empty) characters
+
+```{r}
+remove_blanks <- function(x){
+  classes <- sapply(x, is.character)
+  
+  cols <- colnames(x)[classes]
+  
+  mutate_at(x, cols, function(y){gsub(pattern = "^$", replacement = NA, y)})
+}
+```
+
+
+### Remove characters with double blanks
+
+```{r}
+remove_double_blanks <- function(x){
+  classes <- sapply(x, is.character)
+  
+  cols <- colnames(x)[classes]
+  
+  mutate_at(x, cols, function(y){gsub(pattern = "( )\\1+", replacement = "\\1", y)})
+}
+```
+
+
+### Remove trailing and leading whitespaces
+
+```{r}
+remove_spaces <- function(x){
+  classes <- sapply(x, is.character)
+  
+  cols <- colnames(x)[classes]
+  
+  mutate_at(x, cols, function(y){gsub(pattern = "^\\s+", replacement = "", y)})
+}
+```
+
+
+### Remove "blank / blank"
+```{r}
+remove_bpunctb <- function(x){
+  classes <- sapply(x, is.character)
+  
+  cols <- colnames(x)[classes]
+  
+  mutate_at(x, cols, function(y){gsub(pattern = "( / )", replacement = "/", y)})
+  }
+```
+
+We can now use the functions above for general fixes, and use `mutate` to fix particular things
+
+## Last inspection
+
+```{r}
+
+cooperatives <- ToLower(cooperatives_db) %>% # set to lower case
+  makeTF() %>% 
+  remove_blanks() %>% #remove blank (empty) cells)
+  mutate(umbrella_organization = gsub(pattern = 0, replacement = FALSE, x = umbrella_organization), # Make 0's into FALSE
+         umbrella_organization = gsub(pattern = "[1,2]", replacement = TRUE, x = umbrella_organization), # Make xi >= 1 into TRUE
+         target_species = gsub(pattern = "[[:punct:]]", replacement = "", x = gsub("\\<callo de hacha\\>", "", target_species)), # Replace duplicated callo
+         complete_name = gsub(pattern = "[[:punct:]]", replacement = "", x = gsub(pattern = "sp.", replacement = "spp", complete_name)),
+         complete_name = ifelse(complete_name == "panuliris  argus", "panulirus argus", complete_name),
+         complete_name = taxize::taxize_capwords(complete_name, strict = T, onlyfirst = T),
+         species_growth = ifelse(species_growth == "slow", "low", species_growth),
+         adult_movement = gsub(pattern = "--", replacement = "-", adult_movement),
+         catch_share_types = gsub(pattern = "-", replacement = "", catch_share_types),
+         catch_share_types = gsub(pattern = "coops", replacement = "coop", catch_share_types),
+         gear_type = gsub(pattern = "artisianal", replacement = "artisanal", gear_type),
+         use_of_catch = ifelse(use_of_catch == "1.local market (mostly wholesale) 2. subsistence (www.indiana.edu/~voconf/papers/thomson_voconf.pdf)", "local market/subsistance", use_of_catch),
+         use_of_catch = gsub(pattern = ";", replacement = "/", use_of_catch)) %>%
+  remove_double_blanks() %>%
+  remove_spaces() %>%
+  remove_bpunctb()
+
+lapply(cooperatives, sort_unique) %>% 
   listviewer::jsonedit()
 ```
 
 
+Everything looks good for now. We can go ahead and save this new version
 
-
+```{r}
+write.csv(x = cooperatives, file = "cooperatives_clean.csv", row.names = F)
+save(cooperatives, file = "data/cooperatives.rda")
+```
 
 
 
