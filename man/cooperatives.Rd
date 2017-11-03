@@ -44,6 +44,8 @@ by using the \code{\link{get_variables}} function.
 
 For a full documentation of the original dataset, look at the supplementary
 information of the paper in: https://doi.org/10.1016/j.marpol.2012.03.012.
+
+For a record of changes made to the database visit http://www.jcvdav.github.io/cooperatR/DBcleaning.nb.html
 }
 \references{
 Daniel A. Ovando, Robert T. Deacon, Sarah E. Lester, Christopher Costello, Tonya Van Leuvan, Karlynn McIlwain, C. Kent Strauss, Michael Arbuckle, Rod Fujita, Stefan Gelcich, Hirotsugu Uchida, Conservation incentives and collective choices in cooperative fisheries, Marine Policy, Volume 37, January 2013, Pages 132-140, ISSN 0308-597X, https://doi.org/10.1016/j.marpol.2012.03.012.

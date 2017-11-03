@@ -37,6 +37,8 @@
 #' 
 #' For a full documentation of the original dataset, look at the supplementary
 #' information of the paper in: https://doi.org/10.1016/j.marpol.2012.03.012.
+#' 
+#' For a record of changes made to the database visit http://www.jcvdav.github.io/cooperatR/DBcleaning.nb.html
 #'
 #' @docType data
 #' @keywords datasets
