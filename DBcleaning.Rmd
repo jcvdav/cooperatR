@@ -239,12 +239,27 @@ remove_bpunctb <- function(x){
   }
 ```
 
-We can now use the functions above for general fixes, and use `mutate` to fix particular things
-
-## Last inspection
+### Coerce characters of T and F to logicals
 
 ```{r}
+makeTF2 <- function(x){
+  
+  cols <- summarize_all(x, function(y){any(y %in% c("TRUE", "FALSE"))}) %>% 
+    gather(variable, value) %>% 
+    filter(value) %$% 
+    variable
+  
+  mutate_at(x, cols, as.logical)
+}
+```
 
+
+
+## Make all changes
+
+We can now use the functions above for general fixes, and use `mutate` to fix particular things
+
+```{r}
 cooperatives <- ToLower(cooperatives_db) %>% # set to lower case
   makeTF() %>% 
   remove_blanks() %>% #remove blank (empty) cells)
