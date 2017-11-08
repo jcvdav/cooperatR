@@ -278,8 +278,13 @@ cooperatives <- ToLower(cooperatives_db) %>% # set to lower case
          use_of_catch = gsub(pattern = ";", replacement = "/", use_of_catch)) %>%
   remove_double_blanks() %>%
   remove_spaces() %>%
-  remove_bpunctb()
+  remove_bpunctb() %>% 
+  makeTF2()
+```
 
+## Last inspection
+
+```{r}
 lapply(cooperatives, sort_unique) %>% 
   listviewer::jsonedit()
 ```
