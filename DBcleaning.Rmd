@@ -128,17 +128,19 @@ By reviewing each of the above, we can identify the following things we might wa
 - `adult_movement`
     - ~~Some values are separated by double dashes `--`~~
 - `catch_share_types`
-    - ~fix values of `Co-op` to `coop`~
+    - ~~fix values of `Co-op` to `coop`~~
     - compose a `catch_share_types2` column based on the columns right next to this one
 - `species_value` and `unit_of_value`
-    - will be fixed by Andrew
+    - ~~will be fixed by Andrew~~
 - `gear_type`
     - ~~misspelled values~~
 - `landings_coop` and `landings_units`
-    - fixed by Andrew
+    - ~~fixed by Andrew~~
 - `use_of_catch`
     - ~~Long record must be shortened (`1.local market (mostly wholesale) 2. subsistence (www.indiana.edu/~voconf/papers/thomson_voconf.pdf)", "local market/subsistance`)~~
     - ~~Replace `;` wih `/`~~
+- `vessels_coop`
+    - There are some weird records, stating that there are 54010 vessesls for a couple of coops. This might just be datenums that were misshandled. **Check with Dan!**
 
 Most of these problems can be fixed easily by making some small functions:
 
