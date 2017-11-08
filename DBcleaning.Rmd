@@ -308,4 +308,3 @@ save(cooperatives, file = "data/cooperatives.rda")
 
 
 
-
