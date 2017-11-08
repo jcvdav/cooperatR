@@ -2,6 +2,17 @@
 
 ## NEWS SECTION
 
+### November 8
+
+1. A new function was introduced to the package `cooperatR::norm_coop()`.
+    - The function standardizes all numeric (and logical) values between 0 and 1.
+    - You will need to update the package (*i.e.* run `install_github("jcvdav/cooperatR")`) to have this function available.
+    - For a list of available normalized variables, review the function documentation with `?norm_coop`
+
+**Warning** There are still some doubts about certain values in the data; look at the [database logbook](http://www.villasenor-derbez.com/cooperatR/DBcleaning.nb.html)
+
+### October 30
+
 1. The database has been updated. Column names remain the same, but it many inconsistencies have been fixed (and more will be ficed in the next days). Al inconsistencies have been identified. To see a logbook of changes [click here](http://www.villasenor-derbez.com/cooperatR/DBcleaning.nb.html)
 
 2. Proposed system for archiving our data: The **K**nowledge **N**etwork for **B**iocomplexity ([KNB](https://knb.ecoinformatics.org/#about))
