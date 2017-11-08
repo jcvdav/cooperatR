@@ -12,6 +12,7 @@ output:
 
 ```{r}
 suppressPackageStartupMessages({
+  library(magrittr)
   library(tidyverse)
 })
 ```
