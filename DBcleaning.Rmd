@@ -282,13 +282,68 @@ cooperatives <- ToLower(cooperatives_db) %>% # set to lower case
   makeTF2()
 ```
 
-## Last inspection
+## Inspection
 
 ```{r}
 lapply(cooperatives, sort_unique) %>% 
   listviewer::jsonedit()
 ```
 
+## Adding indicators
+
+Team 1 has extracted values related to Ecological sensitivity, which we can now add to the master database. We can load them and take a look:
+
+```{r}
+new_variables <- read.csv("coop_data_habitat.csv", stringsAsFactors = F, strip.white = T)
+
+head(new_variables)
+```
+
+
+The first thing that pops out is the inconsistent column names. Let's fix that first:
+
+```{r}
+columns <- colnames(new_variables) %>%
+  tolower() %>%
+  gsub(pattern = "[[:punct:]]", replacement = "_")
+
+columns
+```
+
+These look better, let's update them in the table
+
+```{r}
+colnames(new_variables) <- columns
+
+head(new_variables)
+```
+
+Let's now inspect unique values:
+
+```{r}
+lapply(new_variables, sort_unique) %>% 
+  listviewer::jsonedit()
+```
+
+There are some inconsistencies, but these can be fixed later.
+
+We can now add these variables to the master db
+
+```{r}
+cooperatives %<>%
+  left_join(new_variables, by = c("original_order", "fishery_id", "fished_habitat"))
+```
+
+## Last Inspection
+
+We can now see the new variables have been added
+
+```{r}
+lapply(cooperatives, sort_unique) %>% 
+  listviewer::jsonedit()
+```
+
+## Save progress
 
 Everything looks good for now. We can go ahead and save this new version
 

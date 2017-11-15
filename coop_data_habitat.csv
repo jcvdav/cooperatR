@@ -1,0 +1,104 @@
+original_order,fishery_id,fished_habitat,Comment about Vulnerability ,Sea Level Vulnerability,Sea Temp Vulnerability,Ocean Acidification Vulnerability,Ozone/UV Vulnerability,Recovery Time
+1,1,coral reef,,2.4,2.8,1.1,0.8,1.1
+2,1,coral reef,,2.4,2.8,1.1,0.8,1.1
+13,7,coral reef,,2.4,2.8,1.1,0.8,1.1
+29,22,coral reef,,2.4,2.8,1.1,0.8,1.1
+17,11,coral reef/costal waters,No data for coastal waters,2.4,2.8,1.1,0.8,1.1
+18,11,deep water,,0,2.3,0,0,0.4
+27,20,Deep water,,0,2.3,0,0,0.4
+28,21,Deep water,,0,2.3,0,0,0.4
+31,23,Deep water,,0,2.3,0,0,0.4
+32,24,Deep water,,0,2.3,0,0,0.4
+34,26,Deep water,,0,2.3,0,0,0.4
+35,27,Deep water,,0,2.3,0,0,0.4
+36,28,Deep water,,0,2.3,0,0,0.4
+106,66,estruarine,,NA,NA,NA,NA,NA
+94,60,estuarine,,NA,NA,NA,NA,NA
+95,60,estuarine,,NA,NA,NA,NA,NA
+96,60,estuarine,,NA,NA,NA,NA,NA
+75,50,estuarine,,NA,NA,NA,NA,NA
+79,52,estuarine,,NA,NA,NA,NA,NA
+80,52,estuarine,,NA,NA,NA,NA,NA
+14,8,fjord; soft shelf/soft slope,"ice, soft shelf, soft slope",0/2.0/0,3.8/2.5/2.3,0/1.7/2.1,2.7/1.9/0,0.3
+101,64,Freshwater,,NA,NA,NA,NA,NA
+103,65,Freshwater,,NA,NA,NA,NA,NA
+104,65,Freshwater,,NA,NA,NA,NA,NA
+105,65,Freshwater,,NA,NA,NA,NA,NA
+44,34,hard bottom / slopes (75-125m),hard shelf,1.5,2.9,2.5,1.8,1.1
+52,39,hard bottom / slopes (75-125m),hard shelf,1.5,2.9,2.5,1.8,1.1
+33,25,Hard bottom shelf,hard shelf,1.5,2.9,2.5,1.8,1.1
+11,6,hard shelf,hard shelf,1.5,2.9,2.5,1.8,1.1
+40,30,hard slope (200-2000m),,0,0.9,1.6,0,0.8
+109,68,lagoon,,NA,NA,NA,NA,NA
+15,9,Lagoon/coastal wetland,,NA,NA,NA,NA,NA
+107,67,lake,,NA,NA,NA,NA,NA
+108,67,lake,,NA,NA,NA,NA,NA
+112,70,lake,,NA,NA,NA,NA,NA
+113,70,lake,,NA,NA,NA,NA,NA
+114,70,lake,,NA,NA,NA,NA,NA
+12,7,mangrove,,3,2.4,1.2,0.2,1.1
+90,57,Mangrove,,3,2.4,1.2,0.2,1.1
+9,5,NA,,NA,NA,NA,NA,NA
+20,13,NA,,NA,NA,NA,NA,NA
+10,5,NA,,NA,NA,NA,NA,NA
+5,3,NA,,NA,NA,NA,NA,NA
+30,22,NA,,NA,NA,NA,NA,NA
+38,30,NA,,NA,NA,NA,NA,NA
+42,32,NA,,NA,NA,NA,NA,NA
+54,40,NA,,NA,NA,NA,NA,NA
+76,51,NA,,NA,NA,NA,NA,NA
+77,51,NA,,NA,NA,NA,NA,NA
+78,51,NA,,NA,NA,NA,NA,NA
+86,54,NA,,NA,NA,NA,NA,NA
+87,54,NA,,NA,NA,NA,NA,NA
+88,55,NA,,NA,NA,NA,NA,NA
+89,56,NA,,NA,NA,NA,NA,NA
+100,63,NA,,NA,NA,NA,NA,NA
+102,64,NA,,NA,NA,NA,NA,NA
+91,58,NA,,NA,NA,NA,NA,NA
+65,48,NA,,NA,NA,NA,NA,NA
+19,12,NA,,NA,NA,NA,NA,NA
+6,3,NA,,NA,NA,NA,NA,NA
+24,17,NA,,NA,NA,NA,NA,NA
+4,3,NA,,NA,NA,NA,NA,NA
+7,3,NA,,NA,NA,NA,NA,NA
+16,10,NA,,NA,NA,NA,NA,NA
+22,15,NA,,NA,NA,NA,NA,NA
+49,36,NA,,NA,NA,NA,NA,NA
+51,38,NA,,NA,NA,NA,NA,NA
+57,41,NA,,NA,NA,NA,NA,NA
+58,42,NA,,NA,NA,NA,NA,NA
+3,2,NA,,NA,NA,NA,NA,NA
+66,48,"Reef, Lagoon, Mangroves, Seagrass, Algal beds","rocky reef, mangrove, seagrass",1.5/3.0/2.6,1.9/2.4/2.1,1.1/1.2/1.4,0.7/0.2/0.5,1.3/1.1/1.0
+67,48,"Reef, Lagoon, Mangroves, Seagrass, Algal beds","rocky reef, mangrove, seagrass",1.5/3.0/2.7,1.9/2.4/2.0,1.1/1.2/1.4,0.7/0.2/0.5,1.3/1.1/1.0
+56,40,Rocky bottom,NA,,,,,
+23,16,Rocky intertidal,,2.5,2.8,0.9,0.9,1.1
+55,40,Rocky intertidal,,2.5,2.8,0.9,0.9,1.1
+64,47,rocky intertidal (0-30m),,2.5,2.8,0.9,0.9,1.1
+62,47,rocky intertidal (0-30m),,2.5,2.8,0.9,0.9,1.1
+63,47,rocky intertidal (0-30m),,2.5,2.8,0.9,0.9,1.1
+25,18,rocky reef,,1.5,1.9,1.1,0.7,1.3
+26,19,rocky reef,,1.5,1.9,1.1,0.7,1.3
+68,49,Rocky Reef,,1.5,1.9,1.1,0.7,1.3
+84,53,Rocky Reef,,1.5,1.9,1.1,0.7,1.3
+85,53,Rocky Reef,,1.5,1.9,1.1,0.7,1.3
+92,59,sea grass beds,,2.6,2.1,1.4,0.5,1
+93,59,sea grass beds,,2.6,2.1,1.4,0.5,1
+97,61,sea grass beds,,2.6,2.1,1.4,0.5,1
+41,31,shallow soft bottom,subtidal soft bottom/subtidal mud,2.2,0.5,0.1,0.3,0.8
+43,33,soft benthic,,1.6,2.5,2.2,1.3,1.4
+50,37,Soft benthic,,1.6,2.5,2.2,1.3,1.4
+59,43,soft benthic,,1.6,2.5,2.2,1.3,1.4
+60,44,soft benthic,,1.6,2.5,2.2,1.3,1.4
+61,44,soft benthic,,1.6,2.5,2.2,1.3,1.4
+115,71,soft shelf,,2,2.5,0.7,1.9,1.2
+45,34,soft shelf (150-420m),used soft shelf even though depths don't match up,2,2.5,0.7,1.9,1.2
+53,39,soft shelf (150-420m),used soft shelf even though depths don't match up,2,2.5,0.7,1.9,1.2
+110,69,subtidal soft bottom,,2.2,0.5,0.1,0.3,0.8
+111,69,subtidal soft bottom,,2.2,0.5,0.1,0.3,0.8
+39,30,"Subtidal soft bottom, Soft shelf",subtidal mud for recovery,2.2/2,0.5/2.5,0.1/1.7,0.3/1.9,0.8/1.2
+21,14,Surface water,,2.4,3.3,1.8,1.5,1.2
+46,35,Surface water,,2.4,3.3,1.8,1.5,1.2
+47,35,Surface water,,2.4,3.3,1.8,1.5,1.2
+48,35,Surface water/ Deep water,,2.4/0,3.3/2.3,1.8/0,1.5/0,1.2/0.4
+37,29,Surface waters,,2.4,3.3,1.8,1.5,1.2
