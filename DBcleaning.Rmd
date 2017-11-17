@@ -14,6 +14,7 @@ output:
 suppressPackageStartupMessages({
   library(magrittr)
   library(tidyverse)
+  library(raster)
 })
 ```
 
@@ -343,6 +344,45 @@ lapply(cooperatives, sort_unique) %>%
   listviewer::jsonedit()
 ```
 
+
+## Add coordinates by `fishery_id`
+
+```{r}
+coords <- read.csv("coords.csv", stringsAsFactors = F, strip.white = T) %>% 
+  filter(!is.na(lon))
+```
+
+### Load a raster
+
+```{r}
+r <- raster("2009_5.nc", varname = "sst4")
+```
+
+### Extract values from a raster
+
+```{r}
+proj2 <- "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
+
+xy <-  data.frame(X = coords$lon, Y = coords$lat)
+coordinates(xy) <- c("X", "Y")
+proj4string(xy) <- proj2  ## for example
+res <- spTransform(xy, proj2)
+
+plot(r)
+
+temps <- raster::extract(r, res)
+```
+
+### Joit exposure to master DB
+
+```{r}
+coords <- cbind(coords, temps)
+
+cooperatives %<>%
+  left_join(coords, by = "fishery_id")
+```
+
+
 ## Save progress
 
 Everything looks good for now. We can go ahead and save this new version
@@ -351,10 +391,6 @@ Everything looks good for now. We can go ahead and save this new version
 write.csv(x = cooperatives, file = "cooperatives_clean.csv", row.names = F)
 save(cooperatives, file = "data/cooperatives.rda")
 ```
-
-
-
-
 
 
 
