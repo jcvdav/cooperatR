@@ -345,41 +345,92 @@ lapply(cooperatives, sort_unique) %>%
 ```
 
 
-## Add coordinates by `fishery_id`
+## Add coordinates and Temperature change by `fishery_id`
+
+### Load the coordinates
 
 ```{r}
 coords <- read.csv("coords.csv", stringsAsFactors = F, strip.white = T) %>% 
   filter(!is.na(lon))
+
+cooperatives %<>%
+  left_join(coords, by = "fishery_id")
 ```
 
-### Load a raster
+### Land shapefile
 
-```{r}
-r <- raster("2009_5.nc", varname = "sst4")
-```
-
-### Extract values from a raster
+We will use raster images from [https://cds.nccs.nasa.gov/nex-gddp/](https://cds.nccs.nasa.gov/nex-gddp/). For now, I am using 2006 and 250, and will calculate the difference between these. The raster covers the whole world, but we will only need the ocean. We need a shapefile of land to crop the continents out.
 
 ```{r}
 proj2 <- "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
 
-xy <-  data.frame(X = coords$lon, Y = coords$lat)
+data(World)
+
+World <- as(World, "sf") %>% 
+  sf::st_transform(proj2) %>% 
+  mutate(N = 1) %>% 
+  sf::st_union(by = N) %>% 
+  sf::as_Spatial()
+```
+
+
+### Load a raster and mask it by land
+
+We load the rasters, then calculate the difference between them, then rotate them (GCM output is between 0 and 360, we want -180 to 180), and then apply the mask.
+
+```{r}
+rasters <- list.files(pattern='tsamax', full.names = T)
+r2006 <- stack(rasters[1]) %>% 
+  mean() %>% 
+  rotate() %>% 
+  mask(World, inverse = T)
+
+r2050 <- stack(rasters[2]) %>% 
+  mean() %>% 
+  rotate() %>% 
+  mask(World, inverse = T)
+
+r <- r2050-r2006
+```
+
+Let's see how they look
+
+```{r}
+plot(r)
+```
+
+### Extract values from a raster
+
+Using he coordinates provided for each site, we can extract the temperature differences at avery point, using a buffer. We need to filter-out the freshwater fisheries.
+
+```{r}
+saltwater <- cooperatives %>%
+  filter(!fish_type == "freshwater") %>% 
+  group_by(fishery_id) %>% 
+  summarize(lon = mean(lon, na.rm = T), lat = mean(lat, na.rm = T)) %>% 
+  filter(!is.na(lon), !is.na(lat))
+
+xy <- data.frame(X = saltwater$lon, Y = saltwater$lat)
 coordinates(xy) <- c("X", "Y")
 proj4string(xy) <- proj2  ## for example
-res <- spTransform(xy, proj2)
+xy <- SpatialPointsDataFrame(xy, saltwater, proj4string = proj2)
 
-plot(r)
-
-temps <- raster::extract(r, res)
+plot(World, col = "gray")
+plot(xy, add = T, pch = 20)
 ```
+
+```{r}
+temps <- raster::extract(r, xy, buffer = 50000, fun = mean)
+```
+
 
 ### Joit exposure to master DB
 
 ```{r}
-coords <- cbind(coords, temps)
+coords <- cbind(xy, temps)
 
 cooperatives %<>%
-  left_join(coords, by = "fishery_id")
+  left_join(coords@data, by = c("fishery_id", "lon", "lat"))
 ```
 
 
