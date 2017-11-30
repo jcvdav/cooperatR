@@ -427,10 +427,12 @@ temps <- raster::extract(r, xy, buffer = 50000, fun = mean)
 ### Joit exposure to master DB
 
 ```{r}
-coords <- cbind(xy, temps)
+coords <- cbind(xy, temps) 
+colnames(coords@data) <- c("fishery_id", "lon", "lat", "temperature_change")
 
 cooperatives %<>%
-  left_join(coords@data, by = c("fishery_id", "lon", "lat"))
+  left_join(coords@data, by = c("fishery_id", "lon", "lat")) %>% 
+  mutate(temperature_change_normalized = temperature_change / max(temperature_change, na.rm = T))
 ```
 
 
