@@ -351,7 +351,9 @@ lapply(cooperatives, sort_unique) %>%
 
 ```{r}
 coords <- read.csv("coords.csv", stringsAsFactors = F, strip.white = T) %>% 
-  filter(!is.na(lon))
+  filter(!is.na(lon)) %>% 
+  group_by(fishery_id) %>% 
+  summarize_at(.vars = c("lat", "lon"), .funs = mean)
 
 cooperatives %<>%
   left_join(coords, by = "fishery_id")
@@ -432,7 +434,7 @@ colnames(coords@data) <- c("fishery_id", "lon", "lat", "temperature_change")
 
 cooperatives %<>%
   left_join(coords@data, by = c("fishery_id", "lon", "lat")) %>% 
-  mutate(temperature_change_normalized = temperature_change / max(temperature_change, na.rm = T))
+  mutate(temperature_change_normalized = scales::rescale(temperature_change))
 ```
 
 
